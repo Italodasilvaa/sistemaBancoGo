@@ -2,24 +2,46 @@ package main
 
 import (
 	"fmt"
-
-	c "/contas"
+	"sistemabancogo/contas"
 )
+
+func PagarBoleto(conta verificarConta, valorDoBoleto float64) {
+	conta.Sacar(valorDoBoleto)
+}
+
+type verificarConta interface {
+	Sacar(valor float64) string
+}
 
 func main() {
 
-	contaDaSilvia := c.ContaCorrente{}
-	contaDaSilvia.Titular = "Silvia"
-	contaDaSilvia.Saldo = 2000
+	contaDoDenis := contas.ContaCorrente{}
+	contaDoDenis.Depositar(700)
+	PagarBoleto(&contaDoDenis, 150)
 
-	contaDoItalo := c.ContaCorrente{}
-	contaDoItalo.Titular = "Italo"
-	contaDoItalo.Saldo = 5000
+	fmt.Println(contaDoDenis)
 
-	genero, titular, status := contaDoItalo.Transferir(&contaDoItalo, 300, &contaDaSilvia)
-	fmt.Println(genero, titular, status)
-	fmt.Println("Saldo conta", contaDoItalo.Titular, " : ", contaDoItalo.Saldo)
-	fmt.Println("Saldo conta", contaDaSilvia.Titular, " : ", contaDaSilvia.Saldo)
+	// clienteItalo := clientes.Titular{
+	// 	Nome:      "Italo",
+	// 	CPF:       "123.456.789.10",
+	// 	Profissao: "Desenvolvedor",
+	// }
+	// contaDoItalo := contas.ContaCorrente{
+	// 	Titular:       clienteItalo,
+	// 	NumeroAgencia: 123,
+	// 	NumeroConta:   56655,
+	// 	Saldo:         125.50,
+	// }
+	// contaDaSilvia := contas.ContaCorrente{}
+	// contaDaSilvia.Saldo = 2000
+
+	// contaDoItalo := contas.ContaCorrente{}
+	// contaDoItalo.Saldo = 5000
+
+	// genero, titular, status := contaDoItalo.Transferir(&contaDoItalo, 300, &contaDaSilvia)
+	// fmt.Println(genero, titular, status)
+	// fmt.Println("Saldo conta", contaDoItalo.Titular, " : ", contaDoItalo.Saldo)
+	// fmt.Println("Saldo conta", contaDaSilvia.Titular, " : ", contaDaSilvia.Saldo)
 
 	// fmt.Println(contaDaSilvia.saldo)
 
@@ -33,13 +55,6 @@ func main() {
 }
 
 // TRABALHANDO COM STRUCT
-
-// contaDoItalo := ContaCorrente{
-// 	titular:       "Italo",
-// 	numeroAgencia: 123,
-// 	numeroConta:   56655,
-// 	saldo:         125.50,
-// }
 
 // contaDaLuana := ContaCorrente{
 // 	titular:       "Luana",
